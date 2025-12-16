@@ -16,7 +16,12 @@ class AnimeViewmodel extends ChangeNotifier {
 
   AnimeViewmodel({required this.repository});
 
-  Future<void> fetchAnimes() async {
+  Future<void> fetchAnimes({bool forceRefresh = false}) async {
+    // Lógica de Cache Inteligente para ter um aplicativo mais otimizado
+    if (_animes.isNotEmpty && !forceRefresh) {
+      return;
+    }
+
     _isLoading = true;
     _error = '';
     notifyListeners();

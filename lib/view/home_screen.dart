@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // Estado de Sucesso (Lista com Pull-To-Refresh)
           return RefreshIndicator(
             onRefresh: () async {
-              await viewModel.fetchAnimes();
+              await viewModel.fetchAnimes(forceRefresh: true);
             },
             color: Colors.blue,
             child: ListView.builder(

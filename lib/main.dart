@@ -25,8 +25,26 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Anime App',
-        theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-        // fazer uma tela melhor depois
+        debugShowCheckedModeBanner: false,
+
+        // Tema Claro (padrão)
+        theme: ThemeData(
+          primarySwatch: Colors.deepPurple,
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.deepPurple,
+            foregroundColor: Colors.white,
+          ),
+        ),
+
+        // Tema Escuro
+        darkTheme: ThemeData.dark().copyWith(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.deepPurple,
+            brightness: Brightness.dark,
+          ),
+        ),
+        themeMode: ThemeMode.system,
         home: const HomeScreen(),
       ),
     );
