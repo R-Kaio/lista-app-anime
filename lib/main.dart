@@ -1,3 +1,4 @@
+import 'package:anime_app/view/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'repositories/anime_repository.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         title: 'Anime App',
         theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
         // fazer uma tela melhor depois
-        home: const Scaffold(body: Center(child: Text('Tela em construção'))),
+        home: const HomeScreen(),
       ),
     );
   }
