@@ -1,11 +1,11 @@
 import '../models/anime_model.dart';
 import '../services/api_service.dart';
 
-class AnimeRespository {
+class AnimeRepository {
   final ApiService apiService;
 
   //Injeção de dependência via construtor
-  AnimeRespository({required this.apiService});
+  AnimeRepository({required this.apiService});
 
   Future<List<Anime>> fetchTopAnimes() async {
     try {
