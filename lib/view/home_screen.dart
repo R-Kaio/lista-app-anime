@@ -1,3 +1,4 @@
+import 'package:anime_app/view/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -109,7 +110,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     subtitle: Text('Score: ${anime.score ?? "N/A"}'),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 17),
                     onTap: () {
-                      print('Clicou no anime: ${anime.title}');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsScreen(anime: anime),
+                        ),
+                      );
                     },
                   ),
                 );
