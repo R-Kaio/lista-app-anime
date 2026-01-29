@@ -1,6 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:anime_app/models/anime_model.dart';
+// Certifique-se que o import está puxando o arquivo correto
+import 'package:anime_app/viewmodels/library_viewmodel.dart';
 
 class DetailsScreen extends StatelessWidget {
   final Anime anime;
@@ -10,7 +13,45 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // CORREÇÃO 1: Nome da variável em minúsculo (camelCase)
+    // E nome da Classe com M maiúsculo (LibraryViewModel)
+    final libraryViewModel = Provider.of<LibraryViewModel>(
+      context,
+      listen: false,
+    );
+
     return Scaffold(
+      // Botão Flutuante para salvar
+      floatingActionButton: FutureBuilder<bool>(
+        // CORREÇÃO 2: Usando a variável (minúsculo) e não a classe
+        future: libraryViewModel.isAnimeSaved(anime.id),
+        builder: (context, snapshot) {
+          final isSaved = snapshot.data ?? false;
+
+          return FloatingActionButton.extended(
+            onPressed: () async {
+              // CORREÇÃO 3: Usando a variável
+              await libraryViewModel.toggleSave(anime);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    isSaved ? 'Removido da biblioteca' : 'Salvo na biblioteca!',
+                  ),
+                  duration: const Duration(seconds: 1),
+                ),
+              );
+              // Atualiza o visual do botão
+              (context as Element).markNeedsBuild();
+            },
+            icon: Icon(isSaved ? Icons.bookmark : Icons.bookmark_border),
+            label: Text(isSaved ? 'Salvo' : 'Salvar'),
+            backgroundColor: isSaved
+                ? Colors.green
+                : Theme.of(context).primaryColor,
+          );
+        },
+      ),
       appBar: AppBar(title: Text(anime.title)),
       body: SingleChildScrollView(
         child: Column(
@@ -48,7 +89,7 @@ class DetailsScreen extends StatelessWidget {
                         children: [
                           const Icon(Icons.star, color: Colors.amber),
                           Text(
-                            '${anime.score ?? "N/A"}',
+                            ' ${anime.score ?? "N/A"}',
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

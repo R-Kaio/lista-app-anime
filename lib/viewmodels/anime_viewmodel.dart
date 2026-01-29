@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import '../models/anime_model.dart';
 import '../repositories/anime_repository.dart';
 
-class AnimeViewmodel extends ChangeNotifier {
+class AnimeViewModel extends ChangeNotifier {
   final AnimeRepository repository;
 
-  // Estados da tela
+  // Estados
   List<Anime> _animes = [];
   bool _isLoading = false;
   String _error = '';
 
+  // Getters
   List<Anime> get animes => _animes;
   bool get isLoading => _isLoading;
   String get error => _error;
 
-  AnimeViewmodel({required this.repository});
+  // Construtor
+  AnimeViewModel({required this.repository});
 
+  // Método para buscar animes
   Future<void> fetchAnimes({bool forceRefresh = false}) async {
-    // Lógica de Cache Inteligente para ter um aplicativo mais otimizado
     if (_animes.isNotEmpty && !forceRefresh) {
       return;
     }
