@@ -12,15 +12,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  // Lista das telas (Abas)
   final List<Widget> _screens = [const HomeScreen(), const LibraryScreen()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(index: _selectedIndex, children: _screens),
-
-      // Barra de Navegação
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (index) {
@@ -28,7 +25,6 @@ class _MainScreenState extends State<MainScreen> {
             _selectedIndex = index;
           });
         },
-        indicatorColor: Theme.of(context).colorScheme.primaryContainer,
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.explore_outlined),

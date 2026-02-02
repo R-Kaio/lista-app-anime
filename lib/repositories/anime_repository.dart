@@ -1,19 +1,22 @@
-import '../models/anime_model.dart';
 import '../services/api_service.dart';
+import '../models/anime_model.dart';
 
 class AnimeRepository {
   final ApiService apiService;
 
-  //Injeção de dependência via construtor
   AnimeRepository({required this.apiService});
 
+  // Top Animes
   Future<List<Anime>> fetchTopAnimes() async {
-    try {
-      final response = await apiService.getTopAnimes();
-      final List<dynamic> dataList = response['data'];
-      return dataList.map((json) => Anime.fromJson(json)).toList();
-    } catch (e) {
-      throw Exception('Erro ao processar dados: $e');
-    }
+    final data = await apiService.getTopAnimes();
+    final List<dynamic> animeList = data['data'];
+    return animeList.map((json) => Anime.fromJson(json)).toList();
+  }
+
+  // Pesquisar
+  Future<List<Anime>> searchAnimes(String query) async {
+    final data = await apiService.searchAnimes(query);
+    final List<dynamic> animeList = data['data'];
+    return animeList.map((json) => Anime.fromJson(json)).toList();
   }
 }

@@ -9,7 +9,7 @@ class LibraryViewModel extends ChangeNotifier {
   List<Anime> get library => _library;
   bool get isLoading => _isLoading;
 
-  // Carrega os animes do banco ao iniciar
+  // Carrega os animes do banco
   Future<void> loadLibrary() async {
     _isLoading = true;
     notifyListeners();
@@ -30,12 +30,18 @@ class LibraryViewModel extends ChangeNotifier {
       await DatabaseService.instance.insertAnime(anime);
     }
 
-    // Recarrega a lista para atualizar a UI
     await loadLibrary();
   }
 
-  // Verifica se um específico está salvo (para pintar o botão)
+  // Verifica se um específico está salvo
   Future<bool> isAnimeSaved(int id) async {
     return await DatabaseService.instance.isSaved(id);
+  }
+
+  // Atualiza o progresso (episódios ou status)
+  Future<void> updateAnime(Anime anime) async {
+    await DatabaseService.instance.insertAnime(anime);
+
+    await loadLibrary();
   }
 }
